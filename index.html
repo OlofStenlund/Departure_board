@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        // Function to send a request to your API
+        function sendRequestToAPI() {
+            fetch('/') // Replace with your API endpoint URL
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the API response data here
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Call the function when the page loads
+        window.addEventListener('load', sendRequestToAPI);
+
+        function autoRefresh() {
+            location.reload();
+        }
+
+        setInterval(autoRefresh, 30000);
+    </script>
+    <title>Departures</title>
+    <style>
+        body {
+            background-color: rgb(31, 32, 33);
+            color: rgb(156, 133, 42);
+        }
+
+        .main_title {
+            background-color: rgb(31, 32, 33);
+            color: #d9d9d9;
+            padding: 5px;
+            font-family: Arial, Helvetica, sans-serif;
+            max-width: 800px;
+            font-size: 40px;
+            position: static;
+
+        }
+            
+        .sub_title {
+            background-color: rgb(31, 32, 33);
+            color: #d9d9d9;
+            padding: 5px;
+            font-family: Arial, Helvetica, sans-serif;
+            max-width: 800px;
+            font-size: 20px;
+        }
+
+        
+        .header_box {
+            background-color:#558ded;
+            color: #ffffff;
+            padding: 10px;
+            margin: 1px 0;
+            border-radius: 5px;
+            display: flex; /* Use flex display to arrange items in a row */
+            align-items: stretch; /* Align items vertically in the center */
+            margin-left: -1px;
+            max-width: 950px;
+        }
+        
+        .box1 {
+            background-color: #323232;
+            color: #ffff50;
+            padding: 10px;
+            margin: 1px 0;
+            border-radius: 5px;
+            display: flex; /* Use flex display to arrange items in a row */
+            align-items: stretch; /* Align items vertically in the center */
+            margin-left: -1px; 
+            max-width: 950px;
+        }
+
+        .box2 {
+            background-color: #486fab;
+            color: rgb(201, 38, 141);
+            padding: 10px;
+            margin: 1px 0;
+            border-radius: 5px;
+            display: flex; /* Use flex display to arrange items in a row */
+            align-items: stretch; /* Align items vertically in the center */
+            margin-left: -1px; 
+            max-width: 950px;
+        }
+       
+
+        .box-item {
+            padding: 0px;
+            border-left: none;
+            position: relative;
+            display: flex;
+            align-items: stretch;
+            flex-grow: 0;
+            width: 20px;
+            font-size: 100;
+
+        }
+
+        .box-item2 {
+            padding: 0px;
+            border-left: none;
+            position: relative;
+            flex-grow: 0;
+            width: 20px;
+            font-size: 150;
+            font-family: Impact, 'Arial Narrow Bold', sans-serif;
+            
+
+        }
+
+
+
+        .box-item:first-child {
+            /* margin-left: 0; Remove left margin for the first value */
+            border-left: none; /* Remove left border for the first value */
+            /* left: 0px; */
+            /* right: 100px; */
+        }
+    </style>
+</head>
+<body>
+    <h1>
+
+        <div class="main_title">
+            <span class="main_title">Avgångar från {{departure_stop}}</span><br>
+            <span class="sub_title">{{day_no}} {{month_name}} {{year}} - {{hour}}:{{minute}}</span>
+        </div>
+    </h1>
+
+    <div class="header_box">
+        {% for title in titles_list %}
+            <div class="box-item2" style="margin-left: 
+            {% if loop.index0 == 3 or loop.index0 == 4 or loop.index0 == 5 %}{{ loop.index0 * 40 }}px;
+                {% else %}{{ loop.index0 * 70 + 10 }}px;{% endif %}">
+                {% if title is iterable and title is not string %}
+                        {{ title|join(", ") }}
+                    {% else %}
+                        {{ title }}
+                    {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    {% for dictionary in my_list[:] %}
+        <div class="box1">
+            {% for value in dictionary.values() %}
+                <div class="box-item" style="margin-left: 
+                {% if loop.index0 == 3 or loop.index0 == 4 or loop.index0 == 5 %}{{ loop.index0 * 40 }}px;
+                {% else %}{{ loop.index0 * 70 + 10 }}px;{% endif %}">
+                    {% if value is iterable and value is not string %}
+                        {{ value|join(", ") }}
+                    {% else %}
+                        {{ value }}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+</body>
+</html>

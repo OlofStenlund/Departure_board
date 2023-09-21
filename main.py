@@ -67,6 +67,10 @@ def get_departures_list(departures_data, now):
         leaves_in_minutes = divmod(leaves_in_sec, 60)[0]
         leaves_in_minutes = int(leaves_in_minutes)
         if leaves_in_minutes >= 0:
+            if leaves_in_minutes == 0:
+                leaves_in_minutes = "Nu"
+            else: 
+                pass
             departures_list.append({"bus_number": {bus_number}, "bus_direction": {bus_direction}, "platform": {platform}, "planned_departure": {planned_departure}, "estimated_departure": {estimated_departure}, "time_until_dearture": {leaves_in_minutes}})
     return departures_list
 
@@ -97,6 +101,7 @@ def main():
         
 
     if valid_seconds <= 3:
+        print("New token needed. Stand by...")
         time.sleep(4)
         token = generate_token()
         save_token(token)
